@@ -17,7 +17,7 @@ Then add this to your `.bashrc`
 export PATH="$HOME/gadi-job:$PATH"
 ```
 
-##  Usage: 
+##  Usage
 
 First, create a profile with `job profile`. This will walk you through a few config options. You can keep all the defaults if you want. 
 
@@ -37,7 +37,7 @@ With the name of the profile.
 
 This will start a job and open up the monitor, which looks like this
 
-```sh
+```
 ==================================================
            PBS Job Monitor
 ==================================================
@@ -53,7 +53,7 @@ Updates every 10 seconds
 
 Once the job starts, the monitor will change to something like this: 
 
-```sh
+```
 ==================================================
            PBS Job Monitor
 ==================================================
