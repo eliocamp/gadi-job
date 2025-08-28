@@ -6,12 +6,14 @@ if [ -z "$WATCH_RUNNING" ]; then
     exec watch -c -t -n $update_seconds bash "$0"
 fi
 
+
+
 # PBS Job Monitor CLI
 # Usage: ./monitor_job.sh
 # Reads job info from project.job file
-
 SCRIPT_NAME=$(basename "$0")
-PROJECT_FILE="project.job"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_FILE="${SCRIPT_DIR}/project.job"
 
 # Colors for output
 RED='\033[0;31m'

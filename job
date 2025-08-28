@@ -1,7 +1,5 @@
 #!/bin/bash
-
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-
 
 case "$1" in
     start)
@@ -10,7 +8,7 @@ case "$1" in
         ;;
     monitor)
         shift
-        (cd "$SCRIPT_DIR" && bash job-monitor.sh "$@")
+        (bash "$SCRIPT_DIR/job-monitor.sh" "$@")
         ;;
     stop)
         shift
@@ -20,12 +18,8 @@ case "$1" in
         shift
         (cd "$SCRIPT_DIR" && bash profile-new.sh "$@")
         ;;            
-    clean)
-        shift
-        (cd "$SCRIPT_DIR" && bash job-clean.sh "$@")
-        ;;                
     *)
-        echo "Usage: $(basename "$0") {start|monitor|stop|profile|clean}"
+        echo "Usage: $(basename "$0") {start|monitor|stop|profile}"
         exit 1
         ;;
 esac
