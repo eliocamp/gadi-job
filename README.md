@@ -35,7 +35,7 @@ This will start a job and open up the monitor, which looks like this
 
 ```
 ==================================================
-           PBS Job Monitor
+           PBS Workbench Monitor
 ==================================================
 
 📍 Job ID: 148114350.gadi-pbs
@@ -51,7 +51,7 @@ Once the job starts, the monitor will change to something like this:
 
 ```
 ==================================================
-           PBS Job Monitor
+           PBS Workbench Monitor
 ==================================================
 
 📍 Job ID: 148114816.gadi-pbs
