@@ -1,6 +1,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-PROJECT_FILE="project.job"
+PROJECT_FILE="$HOME/pbs-workbench/project.job"
 
 
 if [ ! -f "$PROJECT_FILE" ]; then

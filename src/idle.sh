@@ -1,4 +1,4 @@
-PROJECT_FILE="project.job"
+PROJECT_FILE="$HOME/pbs-workbench/project.job"
 
 cleanup() {
     rm -f "$PROJECT_FILE"

@@ -45,7 +45,7 @@ storage=${storage:-gdata/$PROJECT}
 
 mkdir -p $profile_folder
 
-profile_file="$profile_folderfiles/${profile_name}.sh"
+profile_file="$profile_folder/${profile_name}.sh"
 # Generate the profile
 cat > "$profile_file" << EOF
 #!/bin/bash

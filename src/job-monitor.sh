@@ -13,7 +13,7 @@ fi
 # Reads job info from project.job file
 SCRIPT_NAME=$(basename "$0")
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_FILE="${SCRIPT_DIR}/project.job"
+PROJECT_FILE="$HOME/pbs-workbench/project.job"
 
 # Colors for output
 RED='\033[0;31m'
@@ -85,7 +85,7 @@ monitor_job() {
     # Build header
     output+=$(build_status "$BLUE" "==================================================")
     output+="\n"
-    output+=$(build_status "$BLUE" "           PBS Job Monitor")
+    output+=$(build_status "$BLUE" "           PBS Workbench Monitor")
     output+="\n"
     output+=$(build_status "$BLUE" "==================================================")
     output+="\n\n"
