@@ -4,18 +4,14 @@ Start a PBS job that runs idle to ssh into and work interactively.
 
 ## Installation
 
-Clone this repo into your home and make the main script executable
+Clone this repo into your home and run the install script. 
 
 ```bash
 git clone https://github.com/eliocamp/gadi-job
-chmod +x gadi-job/job
+bash gadi-job/install.sh
 ```
 
-Then add this to your `.bashrc` 
-
-```sh
-export PATH="$HOME/gadi-job:$PATH"
-```
+To uninstall, run `uninstall.sh`.
 
 ##  Usage
 

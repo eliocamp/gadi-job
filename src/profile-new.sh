@@ -1,13 +1,16 @@
 #!/bin/bash
 
+# this from the wd of the script. 
+profile_folder=$HOME/gadi-job/profiles
+
 echo "Creating new job profile..."
 echo
-
 
 read -p "Profile name [default: default]: " project_name
 profile_name=${project_name:-default}
 
-if [ -f "profiles/${profile_name}.sh" ]; then
+
+if [ -f "$profile_folder/${profile_name}.sh" ]; then
     read -p "A profile with that name already exists. Overwrite? [y/N]: " overwrite
     # Convert to lowercase and default to 'n'
     overwrite=$(echo "${overwrite:-n}" | tr '[:upper:]' '[:lower:]')
@@ -40,7 +43,9 @@ jobfs=${jobfs:-100GB}
 read -p "Storage [default: gdata/$PROJECT]: " storage
 storage=${storage:-gdata/$PROJECT}
 
-profile_file="profiles/${profile_name}.sh"
+mkdir -p $profile_folder
+
+profile_file="$profile_folderfiles/${profile_name}.sh"
 # Generate the profile
 cat > "$profile_file" << EOF
 #!/bin/bash
@@ -52,8 +57,8 @@ cat > "$profile_file" << EOF
 #PBS -l jobfs=${jobfs}
 #PBS -l storage=${storage}
 #PBS -l wd
-#PBS -o logs/
-#PBS -e logs/
+#PBS -o $HOME/gadi-job/logs
+#PBS -e $HOME/gadi-job/logs
 
 bash idle.sh
 EOF
