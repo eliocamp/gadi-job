@@ -81,13 +81,15 @@ get_job_info() {
 # Main monitoring function
 monitor_job() {
     local output=""
-    
+    local term_width=$(tput cols)
+    hline=$(build_status "$BLUE" "$(printf '=%.0s' $(seq 1 $term_width))")
+
     # Build header
-    output+=$(build_status "$BLUE" "==================================================")
+    output+=$hline
     output+="\n"
     output+=$(build_status "$BLUE" "           PBS Workbench Monitor")
     output+="\n"
-    output+=$(build_status "$BLUE" "==================================================")
+    output+=$hline
     output+="\n\n"
     
     # Check for project.job file
@@ -195,7 +197,7 @@ monitor_job() {
     esac
     
     output+="\n\n"
-    output+=$(build_status "$BLUE" "==================================================")
+    output+=$hline
     output+="\n"
     output+=$(build_status "$YELLOW" "Updates every $update_seconds seconds")
     
