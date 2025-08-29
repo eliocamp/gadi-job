@@ -9,4 +9,4 @@ INSTALL_DIR="$HOME/.local/bin/$APP_NAME"
 rm -rf "$INSTALL_DIR"
 
 # Remove everything between markers
-sed -i '/# BEGIN gadi-job PATH/,/# END gadi-job PATH/d' "$HOME/.bashrc" 2>/dev/null || true
+sed -i '/# BEGIN gadi-job/,/# END gadi-job/d' "$HOME/.bashrc" 2>/dev/null || true
