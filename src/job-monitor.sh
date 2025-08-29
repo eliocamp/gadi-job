@@ -149,15 +149,14 @@ monitor_job() {
             ;;
         "R")
             wd=$(pwd)
-            output+=$(build_status "$GREEN" "🚀 Status: RUNNING")
-            output+="\n"
-            output+=$(build_status "$GREEN" "   Job is running on node: $hostname")
-            output+="\n"
+            output+=$(build_status "$GREEN" "🚀 Status: RUNNING on node $hostname")
+            output+="\n\n"
             output+=$(build_status "$GREEN" "   SSH command: \n     ssh -X $hostname")
             output+="\n"
             output+=$(build_status "$GREEN" "   SSH tunnel: \n     ssh -L 8080:127.0.0.1:8080 $USER@$hostname")
             output+="\n"
             output+=$(build_status "$GREEN" "   Remote-ssh: \n     --remote ssh-remote+$hostname $wd")
+            output+="\n"
 
     
             # Calculate runtime based on project.job start time
