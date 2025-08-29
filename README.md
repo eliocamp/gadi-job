@@ -77,7 +77,7 @@ job montior
 To stop the job, use 
 
 ```sh
-job stop
+job end
 ```
 
 ### SSH

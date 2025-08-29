@@ -10,9 +10,9 @@ case "$1" in
         shift
         (bash "$SCRIPT_DIR/job-monitor.sh" "$@")
         ;;
-    stop)
+    end)
         shift
-        (cd "$SCRIPT_DIR" && bash job-stop.sh "$@")
+        (cd "$SCRIPT_DIR" && bash job-end.sh "$@")
         ;;    
     profile)
         shift
