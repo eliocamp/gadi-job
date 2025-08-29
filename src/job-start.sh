@@ -10,7 +10,7 @@ if [ -f "$PROJECT_FILE" ]; then
 fi
 
 profile="${1:-"default"}"
-profile_folder=$HOME/gadi-job/profiles
+profile_folder=$HOME/pbs-workbench/profiles
 job_script="$profile_folder/${profile}.sh"
 
 if [ ! -f $job_script ]; then
@@ -23,7 +23,7 @@ JOB_ID=$(qsub "$job_script")
 
 
 # Logs are saved here, make sure the folder exists
-mkdir -p "$HOME/gadi-job/logs"
+mkdir -p "$HOME/pbs-workbench/logs"
 
 echo "JOB_ID=${JOB_ID}" > "$PROJECT_FILE"
 job monitor

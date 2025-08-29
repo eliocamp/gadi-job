@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this from the wd of the script. 
-profile_folder=$HOME/gadi-job/profiles
+profile_folder=$HOME/pbs-workbench/profiles
 
 echo "Creating new job profile..."
 echo
@@ -57,8 +57,8 @@ cat > "$profile_file" << EOF
 #PBS -l jobfs=${jobfs}
 #PBS -l storage=${storage}
 #PBS -l wd
-#PBS -o $HOME/gadi-job/logs
-#PBS -e $HOME/gadi-job/logs
+#PBS -o $HOME/pbs-workbench/logs
+#PBS -e $HOME/pbs-workbench/logs
 
 bash idle.sh
 EOF

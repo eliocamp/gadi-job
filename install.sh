@@ -4,7 +4,7 @@ set -eu
 # Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC_DIR="$SCRIPT_DIR/src"
-APP_NAME="gadi-job"
+APP_NAME="pbs-workbench"
 
 # First uninstall so we know we're starting fresh
 bash "$SCRIPT_DIR/uninstall.sh"
@@ -20,10 +20,10 @@ chmod +x "$INSTALL_DIR/job"
 echo Updating ~/.bashrc
 
 BASHRC="$HOME/.bashrc"
-echo "# BEGIN gadi-job" >> "$BASHRC"
+echo "# BEGIN $APP_NAME" >> "$BASHRC"
 echo "export PATH=\"$INSTALL_DIR:\$PATH\"" >> "$BASHRC"
 echo "[ -f \"$INSTALL_DIR/completion.sh\" ] && source \"$INSTALL_DIR/completion.sh\"" >> "$BASHRC"
-echo "# END gadi-job" >> "$BASHRC"
+echo "# END $APP_NAME" >> "$BASHRC"
 
 echo "Installation complete!"
 echo "Please run: source ~/.bashrc or restart your terminal"
