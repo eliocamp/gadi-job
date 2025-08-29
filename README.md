@@ -1,4 +1,4 @@
-# gadi-job
+# pbs-workbench
 
 Start a PBS job that runs idle to ssh into and work interactively. 
 
@@ -7,8 +7,8 @@ Start a PBS job that runs idle to ssh into and work interactively.
 Clone this repo into your home and run the install script. 
 
 ```bash
-git clone https://github.com/eliocamp/gadi-job
-bash gadi-job/install.sh
+git clone https://github.com/eliocamp/pbs-workbench
+bash pbs-workbench/install.sh
 ```
 
 To uninstall, run `uninstall.sh`.
@@ -61,7 +61,7 @@ Once the job starts, the monitor will change to something like this:
    SSH command: 
      ssh -X gadi-cpu-clx-0683.gadi.nci.org.au
    Remote-ssh: 
-     --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/gadi-job
+     --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
    Progress: 07:47:49 [                    ] 08:00:00 2%
 
 ==================================================
@@ -99,13 +99,13 @@ Then, use the remote-ssh command to use vscode or a similar editor that supports
 For example, to use vscode, use 
 
 ```sh
-code --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/gadi-job
+code --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
 For Positron, use
 
 ```sh
-positron --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/gadi-job
+positron --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
 This will open the editor, connect to the remote node, and open the current directory. 
