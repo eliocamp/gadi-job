@@ -8,7 +8,7 @@ if [ ! -f "$PROJECT_FILE" ]; then
     exit 1
 fi
 
-source read-project-file.sh
+source "$SCRIPT_DIR/read-project-file.sh"
 
 project_data=$(read_project_file "$PROJECT_FILE")
 
