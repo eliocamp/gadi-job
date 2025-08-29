@@ -60,6 +60,8 @@ Once the job starts, the monitor will change to something like this:
    Job is running on node: gadi-cpu-clx-0683.gadi.nci.org.au
    SSH command: 
      ssh -X gadi-cpu-clx-0683.gadi.nci.org.au
+   SSH tunnel: 
+     ssh -L 8080:127.0.0.1:8080 xxxxxx@gadi-cpu-clx-0683.gadi.nci.org.au
    Remote-ssh: 
      --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
    Progress: 07:47:49 [                    ] 08:00:00 2%
@@ -109,6 +111,34 @@ positron --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pb
 ```
 
 This will open the editor, connect to the remote node, and open the current directory. 
+
+### Jupyter notebook
+
+To run a jupyter notebook first **in your local machine** run the SSH tunnel command:  
+
+
+```sh
+ssh -L 8080:127.0.0.1:8080 xxxxxx@gadi-cpu-clx-0683.gadi.nci.org.au
+```
+
+This will SSH into the node. Now in the node, navigate to your project and start a jupyter notebook 
+
+```sh
+module load jupyterlab/3.4.3-py3.9
+jupyter notebook --no-browser --port=8080
+```
+
+This will start the server up and end with this message
+
+```
+    To access the notebook, open this file in a browser:
+        file:///home/xxxx/xxxx/.local/share/jupyter/runtime/nbserver-275862-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8889/?token=49ba65820b79e0cfcf769f311cob5f70ffac2396f251ba7a
+     or http://127.0.0.1:8889/?token=49ba65820b79e0cfcf769f311cob5f70ffac2396f251ba7a
+```
+
+Open any of the two last links in a browser and done!
 
 #### Common problems
 
