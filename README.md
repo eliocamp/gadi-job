@@ -71,7 +71,7 @@ Updates every 10 seconds
 You can close the monitor anytime you want and open it up again with 
 
 ```sh
-job montior
+job monitor
 ```
 
 To stop the job, use 
