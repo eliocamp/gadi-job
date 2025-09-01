@@ -176,10 +176,10 @@ monitor_job() {
                         local remaining=$(seconds_to_time $remaining_seconds)
                         # Show progress bar
                         local progress=$((used_seconds * 20 / walltime_seconds))
-                        local bar=$(printf "%*s" $progress | tr ' ' '█')
-                        local empty=$(printf "%*s" $((20 - progress)) | tr ' ' '░')
+                        local bar=$(printf "%*s" $progress | tr ' ' '#')
+                        local empty=$(printf "%*s" $((20 - progress)) | tr ' ' '-')
                         output+="\n"
-                        output+=$(build_status "$BLUE" "   Progress: $remaining [$bar$empty] $walltime $((used_seconds * 100 / walltime_seconds))%")
+                        output+=$(build_status "$BLUE" "   Progress: $remaining [$bar$empty] $walltime $((used_seconds * 100 / walltime_seconds))%")                       
                     else
                         output+="\n"
                         output+=$(build_status "$RED" "⚠️  Time exceeded!")
