@@ -10,9 +10,7 @@ fi
 
 source "$SCRIPT_DIR/read-project-file.sh"
 
-project_data=$(read_project_file "$PROJECT_FILE")
-
-IFS='|' read -r job_id hostname started_time <<< "$project_data"
+job_id=$(get_job_id "$PROJECT_FILE")
 
 echo "Deleting job $job_id"
 qdel $job_id

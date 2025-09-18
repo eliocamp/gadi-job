@@ -62,21 +62,41 @@ source read-project-file.sh
 
 # Function to get job info from qstat
 get_job_info() {
-    local job_id=$1
-    local job_info=$(qstat -f "$job_id" 2>/dev/null)
-    
+    local job_id=$1    
+    local job_info=$(qstat -F json -f "$job_id")
+
     if [ $? -ne 0 ]; then
         return 1
     fi
-    
+
     # Extract only the info we need
-    job_state=$(echo "$job_info" | grep "job_state =" | cut -d'=' -f2 | xargs)
-    walltime=$(echo "$job_info" | grep "Resource_List.walltime =" | cut -d'=' -f2 | xargs)
-    used_walltime=$(echo "$job_info" | grep "resources_used.walltime =" | cut -d'=' -f2 | xargs)
-    queue=$(echo "$job_info" | grep "queue =" | cut -d'=' -f2 | xargs)
-    
-    echo "$job_state|$walltime|$used_walltime|$queue"
+    echo $job_info | jq '.Jobs[] | {
+        job_state, 
+        walltime: .Resource_List.walltime, 
+        used_walltime: .resources_used.walltime, 
+        queue, 
+        hostname: ((.exec_host // "/") | split("/")[0]),
+        comment
+        }'
 }
+
+monitor_header() {
+    local header=""
+    header+=$hline
+    header+="\n"
+    header+=$(build_status "$BLUE" "           PBS Workbench Monitor")
+    header+="\n"
+    header+=$hline
+    header+="\n\n"
+    echo $header
+}
+
+get() {
+    local json="$1"
+    local variable="$2"
+    echo "$json" | jq -r ".$variable // empty"
+}
+
 
 # Main monitoring function
 monitor_job() {
@@ -85,12 +105,7 @@ monitor_job() {
     hline=$(build_status "$BLUE" "$(printf '=%.0s' $(seq 1 $term_width))")
 
     # Build header
-    output+=$hline
-    output+="\n"
-    output+=$(build_status "$BLUE" "           PBS Workbench Monitor")
-    output+="\n"
-    output+=$hline
-    output+="\n\n"
+    output+=$(monitor_header)
     
     # Check for project.job file
     if [ ! -f "$PROJECT_FILE" ]; then
@@ -107,7 +122,7 @@ monitor_job() {
     fi
     
     # Read project file
-    project_data=$(read_project_file)
+    local job_id=$(get_job_id $PROJECT_FILE)
     if [ $? -ne 0 ]; then
         output+=$(build_status "$RED" "❌ Failed to read project.job file")
         
@@ -117,26 +132,23 @@ monitor_job() {
         return 1
     fi
     
-    IFS='|' read -r job_id hostname started_time <<< "$project_data"
-    
     output+=$(build_status "$CYAN" "📍 Job ID: $job_id")
     output+="\n"
     
     # Get job status from qstat
-    job_status_data=$(get_job_info "$job_id")
+    local job_status_data=$(get_job_info "$job_id")
     if [ $? -ne 0 ]; then
         # Job not found in qstat - probably completed or killed
         output+="\n"
         output+=$(build_status "$YELLOW" "⚠️  Job not found in queue (completed or terminated)")
         output+="\n"
-        
         # Clear screen and print all at once
         clear
         echo -e "$output"
         return 0
     fi
     
-    IFS='|' read -r job_state walltime used_walltime queue <<< "$job_status_data"
+    local job_state=$(get "$job_status_data" "job_state")
     
     output+="\n"
     
@@ -145,9 +157,11 @@ monitor_job() {
         "Q")
             output+=$(build_status "$YELLOW" "⏳ Status: QUEUED - Waiting for job to run")
             output+="\n"
-            output+=$(build_status "$YELLOW" "   Job is waiting for available resources...")
+            local comment=$(get "$job_status_data" "comment")        
+            output+=$(build_status "$YELLOW" "   Reason: $comment")
             ;;
         "R")
+            local hostname=$(get "$job_status_data" "hostname")
             wd=$(pwd)
             output+=$(build_status "$GREEN" "🚀 Status: RUNNING on node $hostname")
             output+="\n\n"
@@ -160,10 +174,9 @@ monitor_job() {
 
     
             # Calculate runtime based on project.job start time
-            local current_time=$(date +%s)
-            local runtime=$((current_time - started_time))
-            local runtime_readable=$(seconds_to_time $runtime)
-
+            local walltime=$(get "$job_status_data" "walltime")
+            local used_walltime=$(get "$job_status_data" "used_walltime")
+            local queue=$(get "$job_status_data" "queue")
             # Show time information
             if [ -n "$walltime" ]; then
                 walltime_seconds=$(walltime_to_seconds "$walltime")

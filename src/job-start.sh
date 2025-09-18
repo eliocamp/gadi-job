@@ -25,5 +25,5 @@ JOB_ID=$(qsub "$job_script")
 # Logs are saved here, make sure the folder exists
 mkdir -p "$HOME/pbs-workbench/logs"
 
-echo "JOB_ID=${JOB_ID}" > "$PROJECT_FILE"
+echo "${JOB_ID}" > "$PROJECT_FILE"
 job monitor
