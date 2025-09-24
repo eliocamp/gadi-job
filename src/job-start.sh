@@ -6,6 +6,7 @@ PROJECT_FILE="$HOME/pbs-workbench/project.job"
 
 if [ -f "$PROJECT_FILE" ]; then
     echo "Another job already running"
+    echo "Monitor it with `job  monitor` or end it with `job end`."
     exit 1
 fi
 
