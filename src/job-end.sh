@@ -8,7 +8,7 @@ if [ ! -f "$PROJECT_FILE" ]; then
     exit 1
 fi
 
-source "$SCRIPT_DIR/read-project-file.sh"
+source "$SCRIPT_DIR/functions.sh"
 
 job_id=$(get_job_id "$PROJECT_FILE")
 

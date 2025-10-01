@@ -6,8 +6,6 @@ if [ -z "$WATCH_RUNNING" ]; then
     exec watch -c -t -n $update_seconds bash "$0"
 fi
 
-
-
 # PBS Job Monitor CLI
 # Usage: ./monitor_job.sh
 # Reads job info from project.job file
@@ -39,26 +37,7 @@ seconds_to_time() {
     printf "%02d:%02d:%02d" $hours $minutes $secs
 }
 
-# Function to parse walltime to seconds
-walltime_to_seconds() {
-    local walltime=$1
-    # Handle format HH:MM:SS or MM:SS
-    if [[ $walltime =~ ^([0-9]+):([0-9]+):([0-9]+)$ ]]; then
-        # Remove leading zeros to avoid octal interpretation
-        local hours=$((10#${BASH_REMATCH[1]}))
-        local minutes=$((10#${BASH_REMATCH[2]}))
-        local seconds=$((10#${BASH_REMATCH[3]}))
-        echo $(( hours * 3600 + minutes * 60 + seconds ))
-    elif [[ $walltime =~ ^([0-9]+):([0-9]+)$ ]]; then
-        local minutes=$((10#${BASH_REMATCH[1]}))
-        local seconds=$((10#${BASH_REMATCH[2]}))
-        echo $(( minutes * 60 + seconds ))
-    else
-        echo 0
-    fi
-}
-
-source read-project-file.sh
+source functions.sh
 
 # Function to get job info from qstat
 get_job_info() {
@@ -131,10 +110,14 @@ monitor_job() {
         echo -e "$output"
         return 1
     fi
+    local su=$(su_from_id $job_id)
+    local su=$(printf "%0.2f\n" $su)
     
     output+=$(build_status "$CYAN" "📍 Job ID: $job_id")
     output+="\n"
-    
+    output+=$(build_status "$CYAN" "💸 Usage: ${su}SU")
+    output+="\n"
+
     # Get job status from qstat
     local job_status_data=$(get_job_info "$job_id")
     if [ $? -ne 0 ]; then

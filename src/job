@@ -17,9 +17,13 @@ case "$1" in
     profile)
         shift
         (bash "$SCRIPT_DIR/profile-new.sh" "$@")
-        ;;            
+        ;;
+    su)
+        shift
+        (bash "$SCRIPT_DIR/job-su.sh" "$@")
+        ;;
     *)
-        echo "Usage: $(basename "$0") {start|monitor|end|profile}"
+        echo "Usage: $(basename "$0") {start|monitor|end|profile|su}"
         exit 1
         ;;
 esac
