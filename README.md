@@ -11,43 +11,49 @@ git clone https://github.com/eliocamp/pbs-workbench
 bash pbs-workbench/install.sh
 ```
 
-To uninstall, run `uninstall.sh`.
+To uninstall, run `bash pbs-workbench/uninstall.sh`.
 
-##  Usage
+## Quick Start
 
-First, create a profile with `job profile`. This will walk you through a few config options. You can keep all the defaults if you want. 
+0. **Create a profile** (first time only):
 
-Then, to start a job with the `default` profile, use
+```bash
+job profile
+```
 
-```sh
+Follow the prompts to configure your job requirements (CPUs, memory, walltime, etc.)
+
+1. **Start a job**:
+
+```bash
 job start
 ```
 
-If you want to start a different profile, use 
+This will start the `default` profile. You can start a different one with `job start [profile]`.
 
-```sh
-job start <profile> 
+2. **Monitor your job**:
+ 
+The monitor starts automatically, showing job status and connection instructions. 
+You can safely close the monitor with `Ctrl + C` and restart it with 
+
+```bash
+job monitor
 ```
 
-With the name of the profile.
+3. **End your job**:
 
-This will start a job and open up the monitor, which looks like this
+To end the job early use 
 
-```
-==================================================
-           PBS Workbench Monitor
-==================================================
-
-📍 Job ID: 148114350.gadi-pbs
-
-⏳ Status: QUEUED - Waiting for job to run
-   Job is waiting for available resources...
-
-==================================================
-Updates every 10 seconds
+```bash
+job end
 ```
 
-Once the job starts, the monitor will change to something like this: 
+
+## Connecting to the workbench
+
+You can connect to the workbench using SSH using the commands shown in the monitor. 
+
+Once the job starts, the monitor show something like this: 
 
 ```
 ==================================================
@@ -55,6 +61,7 @@ Once the job starts, the monitor will change to something like this:
 ==================================================
 
 📍 Job ID: 148114816.gadi-pbs
+💸 Usage: 256SU
 
 🚀 Status: RUNNING
    Job is running on node: gadi-cpu-clx-0683.gadi.nci.org.au
@@ -70,17 +77,6 @@ Once the job starts, the monitor will change to something like this:
 Updates every 10 seconds
 ```
 
-You can close the monitor anytime you want and open it up again with 
-
-```sh
-job monitor
-```
-
-To stop the job, use 
-
-```sh
-job end
-```
 
 ### SSH
 
@@ -88,7 +84,7 @@ In a terminal **in your local machine**:
 
 Use the SSH command to ssh into the node: 
 
-```sh
+```bash
 ssh -X gadi-cpu-clx-0683.gadi.nci.org.au
 ```
 
@@ -100,13 +96,13 @@ Then, use the remote-ssh command to use vscode or a similar editor that supports
 
 For example, to use vscode, use 
 
-```sh
+```bash
 code --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
 For Positron, use
 
-```sh
+```bash
 positron --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
@@ -117,13 +113,14 @@ This will open the editor, connect to the remote node, and open the current dire
 To run a jupyter notebook first **in your local machine** run the SSH tunnel command:  
 
 
-```sh
+```bash
 ssh -L 8080:127.0.0.1:8080 xxxxxx@gadi-cpu-clx-0683.gadi.nci.org.au
 ```
 
-This will SSH into the node. Now in the node, navigate to your project and start a jupyter notebook 
+This will SSH into the node and now your terminal will be **in the remote**. 
+Navigate to your project and start a jupyter notebook 
 
-```sh
+```bash
 module load jupyterlab/3.4.3-py3.9
 jupyter notebook --no-browser --port=8080
 ```
@@ -140,7 +137,33 @@ This will start the server up and end with this message
 
 Open any of the two last links in a browser and done!
 
-#### Common problems
+## More details 
+
+### Job estimation (gadi specific)
+
+You can use 
+
+```bash
+job su [profile]
+```
+
+to compute the resource usage of your profile. 
+You can also pass any PBS script that you can submit with `qsub`. 
+
+### Project File
+
+PBS Workbench tracks your running job using the file `~/pbs-workbench/project.job`, which contains the job ID of the current job. 
+Don't edit or delete that file. 
+
+### Log Files
+
+Job output is saved to `~/pbs-workbench/logs/` with files named:
+
+- `{job_id}.gadi-pbs.OU` (standard output)
+- `{job_id}.gadi-pbs.ER` (standard error)
+
+
+## Common problems
 
 Since the job node doesn't have internet acccess, it is possible that vscode can't install all the proper Remote SSH server. The solution is to first connect to the login node with `--remote ssh-remote+gadi.nci.org.au`. Once it goes in and installs everything, you should be able to connect to the job node. 
 
