@@ -8,9 +8,6 @@ get_job_id() {
     echo "$id"
 }
 
-
-
-
 walltime_to_seconds() {
     local walltime=$1
     IFS=':' read -r hours minutes seconds <<< "$walltime"

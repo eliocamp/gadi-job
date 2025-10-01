@@ -37,7 +37,7 @@ seconds_to_time() {
     printf "%02d:%02d:%02d" $hours $minutes $secs
 }
 
-source functions.sh
+source $SCRIPT_DIR/functions.sh
 
 # Function to get job info from qstat
 get_job_info() {
@@ -69,13 +69,6 @@ monitor_header() {
     header+="\n\n"
     echo $header
 }
-
-get() {
-    local json="$1"
-    local variable="$2"
-    echo "$json" | jq -r ".$variable // empty"
-}
-
 
 # Main monitoring function
 monitor_job() {
