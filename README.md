@@ -6,7 +6,7 @@ Start a PBS job that runs idle to ssh into and work interactively.
 
 Clone this repo into your home and run the install script. 
 
-```bash
+```sh
 git clone https://github.com/eliocamp/pbs-workbench
 bash pbs-workbench/install.sh
 ```
@@ -17,7 +17,7 @@ To uninstall, run `bash pbs-workbench/uninstall.sh`.
 
 0. **Create a profile** (first time only):
 
-```bash
+```sh
 job profile
 ```
 
@@ -25,7 +25,7 @@ Follow the prompts to configure your job requirements (CPUs, memory, walltime, e
 
 1. **Start a job**:
 
-```bash
+```sh
 job start
 ```
 
@@ -36,7 +36,7 @@ This will start the `default` profile. You can start a different one with `job s
 The monitor starts automatically, showing job status and connection instructions. 
 You can safely close the monitor with `Ctrl + C` and restart it with 
 
-```bash
+```sh
 job monitor
 ```
 
@@ -44,7 +44,7 @@ job monitor
 
 To end the job early use 
 
-```bash
+```sh
 job end
 ```
 
@@ -84,7 +84,7 @@ In a terminal **in your local machine**:
 
 Use the SSH command to ssh into the node: 
 
-```bash
+```sh
 ssh -X gadi-cpu-clx-0683.gadi.nci.org.au
 ```
 
@@ -96,13 +96,13 @@ Then, use the remote-ssh command to use vscode or a similar editor that supports
 
 For example, to use vscode, use 
 
-```bash
+```sh
 code --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
 For Positron, use
 
-```bash
+```sh
 positron --remote ssh-remote+gadi-cpu-clx-0683.gadi.nci.org.au /home/xxx/xxxx/pbs-workbench
 ```
 
@@ -113,14 +113,14 @@ This will open the editor, connect to the remote node, and open the current dire
 To run a jupyter notebook first **in your local machine** run the SSH tunnel command:  
 
 
-```bash
+```sh
 ssh -L 8080:127.0.0.1:8080 xxxxxx@gadi-cpu-clx-0683.gadi.nci.org.au
 ```
 
 This will SSH into the node and now your terminal will be **in the remote**. 
 Navigate to your project and start a jupyter notebook 
 
-```bash
+```sh
 module load jupyterlab/3.4.3-py3.9
 jupyter notebook --no-browser --port=8080
 ```
@@ -143,7 +143,7 @@ Open any of the two last links in a browser and done!
 
 You can use 
 
-```bash
+```sh
 job su [profile]
 ```
 
