@@ -1,6 +1,12 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# If no arguments provided, show help
+if [ $# -eq 0 ]; then
+    bash "$SCRIPT_DIR/job-help.sh"
+    exit 0
+fi
+
 case "$1" in
     start)
         shift
@@ -22,8 +28,12 @@ case "$1" in
         shift
         (bash "$SCRIPT_DIR/job-su.sh" "$@")
         ;;
+    --help|-h)
+        bash "$SCRIPT_DIR/job-help.sh"
+        ;;
     *)
-        echo "Usage: $(basename "$0") {start|monitor|end|profile|su}"
+        echo "Usage: $(basename "$0") {start|monitor|end|profile|su} [--help]"
+        echo "Use 'job --help' for detailed information."
         exit 1
         ;;
 esac
