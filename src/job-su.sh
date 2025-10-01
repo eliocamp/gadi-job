@@ -29,4 +29,4 @@ function cleanup {
 
 trap cleanup EXIT
 
-echo $(su_from_id $job_id)
+printf "%.0f\n" $(su_from_id $job_id)

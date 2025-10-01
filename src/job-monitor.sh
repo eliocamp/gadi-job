@@ -111,8 +111,8 @@ monitor_job() {
         return 1
     fi
     local su=$(su_from_id $job_id)
-    local su=$(printf "%0.2f\n" $su)
-    
+    local su=$(printf "%0.0f\n" $su)
+
     output+=$(build_status "$CYAN" "📍 Job ID: $job_id")
     output+="\n"
     output+=$(build_status "$CYAN" "💸 Usage: ${su}SU")
