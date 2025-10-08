@@ -16,4 +16,7 @@ job_id=$(get_job_id "$PROJECT_FILE")
 
 echo "Deleting job $job_id"
 qdel $job_id
-rm "$PROJECT_FILE"
+
+if [ -f "$PROJECT_FILE" ]; then
+    rm "$PROJECT_FILE"
+fi
